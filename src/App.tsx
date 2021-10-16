@@ -33,7 +33,7 @@ class App extends React.Component<{}, AppState> {
       <React.Fragment>
         <CssBaseline />
         <BrowserRouter>
-          <Header openCart={this.handleOpenCart} />
+          <Header openCart={this.handleOpenCart} cart={this.state.cart} />
           <Routes openCart={this.handleOpenCart} />
           <CartModal
             isCartVisible={this.state.cartOpen}

@@ -142,7 +142,6 @@ class ProductDetail extends React.Component<ProductDetailProps, ProductState> {
   };
 
   addToCart = (event: any) => {
-    console.log('Add to Cart sku id: ' + this.state.sku.id);
     const cart = SessionStorageHelper.getCart();
     cart.addItem(
       this.state.product,

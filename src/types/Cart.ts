@@ -6,11 +6,8 @@ class Cart {
   lineItems: LineItem[] = [] as any;
 
   addItem(product: Product, sku: Sku, quantity: number, price: number): void {
-    console.log('inside addItem');
     var existingSku = false;
     this.lineItems.forEach((item) => {
-      console.log('item sku', item.sku.id);
-      console.log('new sku', sku.id);
       if (item.sku.id === sku.id) {
         item.quantity += quantity;
         item.totalPrice = item.unitPrice * item.quantity;
