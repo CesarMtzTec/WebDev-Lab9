@@ -1,1 +1,19 @@
+.productInfo {
+  margin: 10px;
+  padding: 10px;
+}
 
+.cartProductName {
+  margin-left: 20px !important;
+  font-size: 1.3em !important;
+}
+
+.smallImage {
+  height: 100%;
+}
+
+.removeItemButton {
+  color: white !important;
+  background-color: red !important;
+  margin-left: 1.5rem !important;
+}

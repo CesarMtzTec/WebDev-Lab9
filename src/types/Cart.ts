@@ -1,48 +1,74 @@
-import LineItem from "./LineItem";
-import Product from "./Product";
-import Sku from "./Sku";
+import LineItem from './LineItem';
+import Product from './Product';
+import Sku from './Sku';
 
 class Cart {
-    lineItems: [LineItem] = [] as any;
+  lineItems: LineItem[] = [] as any;
 
-    addItem(product: Product, sku: Sku, quantity: number, price: number) : void {
-        const lineItem = {} as LineItem;
-        lineItem.product = product;
-        lineItem.sku = sku;
-        lineItem.quantity = quantity;
-        lineItem.unitPrice = price;
-        lineItem.totalPrice = quantity * price;
+  addItem(product: Product, sku: Sku, quantity: number, price: number): void {
+    console.log('inside addItem');
+    var existingSku = false;
+    this.lineItems.forEach((item) => {
+      console.log('item sku', item.sku.id);
+      console.log('new sku', sku.id);
+      if (item.sku.id === sku.id) {
+        item.quantity += quantity;
+        item.totalPrice = item.unitPrice * item.quantity;
+        existingSku = true;
+      }
+    });
 
-        this.lineItems.push(lineItem);
+    if (!existingSku) {
+      const lineItem = {} as LineItem;
+      lineItem.product = product;
+      lineItem.sku = sku;
+      lineItem.quantity = quantity;
+      lineItem.unitPrice = price;
+      lineItem.totalPrice = quantity * price;
+
+      this.lineItems.push(lineItem);
     }
+  }
 
-    getNumberOfItems() {
-        var numberOfItems = 0;
+  removeItem(sku: Sku) {
+    var newLineItems: [LineItem] = [] as any;
 
-        this.lineItems.forEach( (lineItem) => {
-            numberOfItems += lineItem.quantity;
-        });
+    this.lineItems.forEach((item) => {
+      if (item.sku.id !== sku.id) {
+        newLineItems.push(item);
+      }
+    });
 
-        return numberOfItems;
-    }
+    this.lineItems = newLineItems;
+  }
 
-    getSubtotal() {
-        var subTotal = 0;
+  getNumberOfItems() {
+    var numberOfItems = 0;
 
-        this.lineItems.forEach( (lineItem) => {
-            subTotal += lineItem.totalPrice;
-        });
+    this.lineItems.forEach((lineItem) => {
+      numberOfItems += lineItem.quantity;
+    });
 
-        return subTotal;
-    }
+    return numberOfItems;
+  }
 
-    getTax() {
-        return this.getSubtotal() * 0.16;    
-    }
-    
-    getTotal() {
-        return this.getSubtotal() + this.getTax();    
-    }
+  getSubtotal() {
+    var subTotal = 0;
+
+    this.lineItems.forEach((lineItem) => {
+      subTotal += lineItem.totalPrice;
+    });
+
+    return subTotal;
+  }
+
+  getTax() {
+    return this.getSubtotal() * 0.16;
+  }
+
+  getTotal() {
+    return this.getSubtotal() + this.getTax();
+  }
 }
 
 export default Cart;

@@ -1,12 +1,13 @@
-import React from "react";
-import "./App.css";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Header from "./containers/Header";
-import { BrowserRouter } from "react-router-dom";
-import Routes from "./components/Routes";
-import CartModal from "./containers/CartModal/CartModal";
-import Cart from "./types/Cart";
-import Helper from "./tools/SessionStorageHelper";
+import React from 'react';
+import './App.css';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Header from './containers/Header';
+import { BrowserRouter } from 'react-router-dom';
+import Routes from './components/Routes';
+import CartModal from './containers/CartModal/CartModal';
+import Cart from './types/Cart';
+import Helper from './tools/SessionStorageHelper';
+import Sku from './types/Sku';
 
 interface AppState {
   cartOpen: boolean;
@@ -33,11 +34,12 @@ class App extends React.Component<{}, AppState> {
         <CssBaseline />
         <BrowserRouter>
           <Header openCart={this.handleOpenCart} />
-          <Routes />
+          <Routes openCart={this.handleOpenCart} />
           <CartModal
             isCartVisible={this.state.cartOpen}
             closeCart={this.handleCloseCart}
             cart={this.state.cart}
+            removeCart={this.handleRemoveCart}
           />
         </BrowserRouter>
       </React.Fragment>
@@ -53,7 +55,13 @@ class App extends React.Component<{}, AppState> {
   };
 
   handleOpenCart = (event: any) => {
-    this.setState({ cartOpen: true });
+    this.setState({ cartOpen: true, cart: Helper.getCart() });
+  };
+
+  handleRemoveCart = (event: any, sku: Sku) => {
+    this.state.cart.removeItem(sku);
+    Helper.updateCart(this.state.cart);
+    this.setState({ cart: Helper.getCart() });
   };
 }
 

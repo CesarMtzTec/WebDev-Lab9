@@ -1,13 +1,11 @@
-import Cart from "../types/Cart";
-import LineItem from "../types/LineItem";
+import Cart from '../types/Cart';
+import LineItem from '../types/LineItem';
 
 class SessionStorageHelper {
   static getCart(): Cart {
     var cart: Cart = new Cart();
     cart.lineItems = [] as unknown as [LineItem];
-    var cartJSON = sessionStorage.getItem("cart");
-
-    console.log(cartJSON);
+    var cartJSON = sessionStorage.getItem('cart');
 
     if (cartJSON != null) {
       const object = JSON.parse(cartJSON);
@@ -18,7 +16,7 @@ class SessionStorageHelper {
   }
 
   static updateCart(cart: Cart): void {
-    sessionStorage.setItem("cart", JSON.stringify(cart));
+    sessionStorage.setItem('cart', JSON.stringify(cart));
   }
 }
 
